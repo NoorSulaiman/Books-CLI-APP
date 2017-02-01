@@ -31,14 +31,35 @@ class FreeBooksController
       x.scrape_category
       x.scrape_book(x.category[input.to_i-1])
       Book.print_books
+      choose_book
+      break
     elsif input == "list"
       Scraper.clear
       category_list
     else
-      
+
       end
     end
   end
+
+  def choose_book
+     input = nil
+     while input != "exit"
+     puts "Select a book number to go to the web page or list to get categories or exit !"
+     input = gets.strip
+     if (input.to_i > 0) && (input.to_i < 10)
+       system("open /http://www.free-ebooks.net#{Book.all[input.to_i-1].url}")
+       elsif
+         input == "list"
+           Scraper.clear
+           category_list
+           menu
+           break
+         else
+           break
+        end
+      end
+    end
 
   def goodbye
     puts "   **************** "
